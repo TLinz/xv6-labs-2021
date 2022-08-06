@@ -7,18 +7,20 @@ void primes(int p_read) {
     int p[2];
     pipe(p); // Create a pipe to transfer current primes to next process.
 
-    if (fork() == 0) {
-        close(p[1]); //*
-        primes(p[0]);
-    }
-
     int prime, n;
     if (read(p_read, (void *)&prime, 1)) {
         printf("prime %d\n", prime);
     } else {
         close(p_read);
+        close(p[1]);
         exit(0);
     }
+
+    if (fork() == 0) {
+        close(p[1]); //*
+        primes(p[0]);
+    }
+
     while(read(p_read, (void *)&n, 1)) {
         if (n % prime == 0) {
             continue;
@@ -37,13 +39,14 @@ main(int argc, char **argv)
 {
     int p[2];
     pipe(p);
+    int up_bound = 11;
 
     // Feed 2-35 to first process.
     if (fork() == 0) {
         close(p[1]); //*
         primes(p[0]);
     }
-    for (int i = 2; i <= 35; i++) {
+    for (int i = 2; i <= up_bound; i++) {
         write(p[1], (const void *)&i, 1);
     }
     close(p[1]);
