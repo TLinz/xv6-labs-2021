@@ -39,7 +39,7 @@ main(int argc, char **argv)
 {
     int p[2];
     pipe(p);
-    int up_bound = 11;
+    int up_bound = 35;
 
     // Feed 2-35 to first process.
     if (fork() == 0) {
