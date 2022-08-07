@@ -11,9 +11,6 @@ void primes(int p_read) {
     if (read(p_read, (void *)&prime, 1)) {
         printf("prime %d\n", prime);
     } else {
-        //(p_read);
-        //close(p[0]);
-        //close(p[1]);
         exit(0);
     }
 
