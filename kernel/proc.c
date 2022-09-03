@@ -289,6 +289,8 @@ fork(void)
   }
   np->sz = p->sz;
 
+  np->trace = p->trace;
+
   // copy saved user registers.
   *(np->trapframe) = *(p->trapframe);
 
